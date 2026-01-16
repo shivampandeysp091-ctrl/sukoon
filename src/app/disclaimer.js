@@ -1,13 +1,13 @@
 import Image from "next/image";
 
-export default function Disclaimer() {
+export default function Disclaimer({onAccept}) {
   return (
     <main className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden px-4 bg-gradient-to-b from-[#E5D9F7] via-[#E8D4F0] to-[#D8E0F8] font-sans">
       
       {/* --- Background Image --- */}
       <div className="absolute inset-0 z-0">
         <Image 
-          src="/images/bg-main.png" 
+          src="/images/bg-main.jpg" 
           alt="Background"
           fill
           className="object-cover object-bottom" 
@@ -30,7 +30,7 @@ export default function Disclaimer() {
           professional or emergency services immediately.
         </p>
 
-        <button className="bg-[#2a006e] text-white font-bold py-4 px-12 rounded-2xl shadow-md hover:bg-[#6b96f0] hover:scale-[1.02] transition-all duration-300 w-full text-lg">
+        <button onClick={onAccept}className="bg-[#2a006e] text-white font-bold py-4 px-12 rounded-2xl shadow-md hover:bg-[#2a006e] hover:scale-[1.02] transition-all duration-300 w-full text-lg">
           Accept and Continue
         </button>
       </div>

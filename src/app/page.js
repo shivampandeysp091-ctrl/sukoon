@@ -1,23 +1,40 @@
-"use client"; // Required for buttons and state
+"use client";
 import { useState } from "react";
 import Image from "next/image";
 import Disclaimer from "./disclaimer";
+import Chat1 from "./chat1";
+import ChatPage from "./ChatPage";
+import BreathingPage from "./BreathingPage"; // Ensure your Gemini chat file is named ChatPage.js
 
 export default function Home() {
-  const [showDisclaimer, setShowDisclaimer] = useState(false);
+  // Use a string state to handle the 4-stage flow
+  const [currentStep, setCurrentStep] = useState("home");
 
-  // If the button was clicked, show the Disclaimer instead
-  if (showDisclaimer) {
-    return <Disclaimer />;
+  if (currentStep === "breathing") {
+    return <BreathingPage onBack={() => setCurrentStep("dashboard")} />;
+  }
+  // 1. Chat Interface (Gemini AI)
+  if (currentStep === "chatting") {
+    return <ChatPage  onBack={() => setCurrentStep("dashboard")}/>;
   }
 
+  // 2. Dashboard (Mood Box & Cards)
+  if (currentStep === "dashboard") {
+    return <Chat1 onStartChat={() => setCurrentStep("chatting")}
+    onStartBreathing={() => setCurrentStep("breathing")} />;
+  }
+
+  // 3. Disclaimer
+  if (currentStep === "disclaimer") {
+    return <Disclaimer onAccept={() => setCurrentStep("dashboard")} />;
+  }
+
+  // 4. Landing Page
   return (
     <main className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden px-4 bg-gradient-to-b from-[#E5D9F7] via-[#E8D4F0] to-[#D8E0F8] font-sans">
-      
-      {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image 
-          src="/images/bg-main.png" 
+          src="/images/bg-main.jpg" 
           alt="Background"
           fill
           className="object-cover object-bottom"
@@ -25,10 +42,14 @@ export default function Home() {
         />
       </div>
 
-      {/* Main Content */}
       <div className="z-10 text-center max-w-2xl mb-20"> 
         <h1 className="text-4xl md:text-6xl font-bold text-[#332258] leading-tight mb-4 tracking-tight">
-          You’re not alone. <span className="text-[inline-block bg-gradient-to-r from-[#7C4DFF] via-[#A855F7] to-[#6366F1] bg-clip-text text-transparent]">Sukoon</span> is <br />
+          You’re not alone.{" "}
+          {/* Updated with your specific hex gradation */}
+          <span className="inline-block bg-gradient-to-r from-[#8D63C6] via-[#6731AD] to-[#400095] bg-clip-text text-transparent">
+            Sukoon
+          </span>{" "}
+          is <br />
           your space to breathe.
         </h1>
 
@@ -36,9 +57,8 @@ export default function Home() {
           Quiet support, whenever you need it.
         </p>
 
-        {/* Updated Button to trigger the state change */}
         <button 
-          onClick={() => setShowDisclaimer(true)}
+          onClick={() => setCurrentStep("disclaimer")}
           className="bg-[#330086] text-white font-bold py-4 px-12 rounded-full shadow-xl hover:bg-[#2a006e] hover:scale-105 transition-all duration-300 w-full max-w-[280px] text-lg"
         >
           Get Started
