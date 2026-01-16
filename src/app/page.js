@@ -1,50 +1,58 @@
-// src/app/page.js
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="relative min-h-screen w-full flex flex-col items-center justify-center overflow-hidden px-4 bg-gradient-to-b from-[#E5D9F7] via-[#E8D4F0] to-[#D8E0F8] font-sans">
+    // 1. OUTER BACKGROUND: Ye screen ka color set karta hai. 
+    // Agar side ka color image se match nahi ho raha, toh ye '#dae2f8' change karo.
+    <main className="min-h-screen w-full bg-[#dae2f8] flex justify-center items-center overflow-hidden">
       
-      {/* --- Background Image --- */}
-      {/* object-cover use kar rahe hain, lekin mobile design desktop par fail jaata hai. 
-          Ye expected behavior hai single portrait image ke saath. */}
-      <div className="absolute inset-0 z-0">
-        <Image 
-          src="/images/bg-main.png" 
-          alt="Background"
-          fill
-          className="object-cover object-bottom" // Phool hamesha bottom mein rahenge
-          priority
-        />
-      </div>
-
-      {/* --- Main Content --- */}
-      {/* mb-20 add kiya hai taaki text center se thoda upar shift ho jaye */}
-      <div className="z-10 text-center max-w-2xl mb-20"> 
+      {/* 2. INNER CONTAINER (MOBILE SCREEN): 
+          Yahan 'max-w-[480px]' wo number hai jo decide karta hai ki image kitni chaudi hogi.
+          Agar image abhi bhi badi lag rahi hai, toh 480 ko kam karke 400 ya 380 kar do. */}
+      <div className="relative w-full max-w-[450px] h-screen shadow-none">
         
-        {/* Heading - EXACT COLORS aur Structure */}
-        {/* text-[#332258] deep violet color hai */}
-        <h1 className="text-4xl md:text-6xl font-bold text-[#332258] leading-tight mb-4 tracking-tight">
-          You’re not alone.{" "}
-          {/* text-[#7C4DFF] bright purple color hai */}
-          <span className="text-[#7C4DFF]">Sukoon</span> is <br />
-          your space to breathe.
-        </h1>
+        {/* --- Background Image --- */}
+        <div className="absolute inset-0 z-0">
+          <Image 
+            src="/images/bg-main.png" 
+            alt="Background"
+            fill
+            // 'object-cover' image ko container me fit karta hai.
+            // 'object-bottom' ensure karta hai ki phool (lotus) hamesha dikhein.
+            className="object-cover object-bottom"
+            priority
+          />
+        </div>
 
-        {/* Subtitle - EXACT COLOR */}
-        {/* text-[#5F6D7E] blue-gray color hai */}
-        <p className="text-[#5F6D7E] text-base md:text-xl mb-10 font-medium max-w-md mx-auto">
-          Quiet support, whenever you need it.
-        </p>
+        {/* --- Main Content (Text & Button) --- */}
+        {/* 3. TEXT POSITION: '-mt-16' text ko upar khinchta hai. 
+            Agar text flowers ke upar aa raha hai, toh isse '-mt-24' karo (aur upar) 
+            ya '-mt-10' karo (thoda niche). */}
+        <div className="relative z-10 flex flex-col items-center justify-center h-full px-8 text-center -mt-16"> 
+          
+          {/* Heading */}
+          <h1 className="text-3xl md:text-4xl font-bold leading-tight mb-4 tracking-tight font-montserrat">
+            <span className="text-[#352166]">You’re not alone. </span>
+            <span className="text-[#8a5cf5]">Sukoon</span>
+            <span className="text-[#352166]"> is <br /> your space to breathe.</span>
+          </h1>
 
-        {/* Button - EXACT COLOR aur Width */}
-        {/* bg-[#330086] deep violet button background */}
-        {/* w-full max-w-xs add kiya taaki button mobile pe chauda dikhe */}
-        <button className="bg-[#330086] text-white font-bold py-4 px-12 rounded-full shadow-xl hover:bg-[#2a006e] hover:scale-105 transition-all duration-300 w-full max-w-[280px] text-lg">
-          Get Started
-        </button>
+          {/* Subtitle */}
+          <p className="text-[#6b5e8b] text-sm md:text-base mb-10 font-medium font-montserrat">
+            Quiet support, whenever you need it.
+          </p>
+
+          {/* Button */}
+          <Link href="/chat" className="w-full">
+            <button className="w-full bg-[#352166] text-white font-bold py-4 rounded-xl shadow-lg hover:bg-[#2a1a52] active:scale-95 transition-all duration-300 text-lg font-montserrat">
+              Get Started
+            </button>
+          </Link>
+
+        </div>
       </div>
-
+      
     </main>
   );
 }
