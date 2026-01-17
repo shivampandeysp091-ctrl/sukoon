@@ -2,9 +2,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { Mic, Send, Plus, User, ArrowLeft, Image as ImageIcon } from 'lucide-react';
-import { GoogleGenerativeAI } from "@google/generative-ai";
 
-const API_KEY = "YOUR_GEMINI_API_KEY_HERE";
 
 // Add onBack to the component props
 export default function ChatPage({ onBack }) {
@@ -20,25 +18,55 @@ export default function ChatPage({ onBack }) {
     }, [messages]);
 
     const handleSend = async () => {
-        if (!input.trim()) return;
-        const userMsg = { id: Date.now(), text: input, sender: "user" };
-        setMessages(prev => [...prev, userMsg]);
-        const currentInput = input;
-        setInput("");
-        setLoading(true);
+    if (!input.trim()) return;
 
-        try {
-            const genAI = new GoogleGenerativeAI(API_KEY);
-            const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-            const result = await model.generateContent(currentInput);
-            const response = await result.response.text();
-            setMessages(prev => [...prev, { id: Date.now() + 1, text: response, sender: "bot" }]);
-        } catch (error) {
-            setMessages(prev => [...prev, { id: Date.now() + 1, text: "Connection error.", sender: "bot" }]);
-        } finally {
-            setLoading(false);
+    const userMsg = { id: Date.now(), text: input, sender: "user" };
+    setMessages(prev => [...prev, userMsg]);
+
+    const currentInput = input;
+    setInput("");
+    setLoading(true);
+
+    try {
+        const res = await fetch("http://127.0.0.1:8000/chat", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                question: currentInput
+            })
+        });
+
+        if (!res.ok) {
+            throw new Error("Backend error");
         }
-    };
+
+        const data = await res.json();
+
+        setMessages(prev => [
+            ...prev,
+            {
+                id: Date.now() + 1,
+                text: data.reply,
+                sender: "bot"
+            }
+        ]);
+    } catch (error) {
+        console.log(error)
+        setMessages(prev => [
+            ...prev,
+            {
+                id: Date.now() + 1,
+                text: "Sorry, I’m having trouble connecting right now.",
+                sender: "bot"
+            }
+        ]);
+    } finally {
+        setLoading(false);
+    }
+};
+
 
     return (
         <div className="relative min-h-screen w-full flex flex-col items-center bg-[#E5EBFB] font-sans overflow-hidden">
