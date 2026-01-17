@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import { User } from "lucide-react";
 
-const BACKEND_MOOD_URL = "http://127.0.0.1:8000/mood"; 
+const BACKEND_MOOD_URL = "https://sukoon-backend-ul6s.onrender.com/mood"; 
 
 export default function Chat1({ onStartChat, onStartBreathing }) {
   const [mood, setMood] = useState("Loading mood...");
