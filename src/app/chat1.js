@@ -54,7 +54,7 @@ export default function Chat1({ onStartChat, onStartBreathing }) {
       <main className="z-10 w-full max-w-2xl px-6 mt-16 space-y-10">
 
         {/* Mood Card (CONNECTED) */}
-        <div className="w-full bg-white rounded-[1rem] p-10 shadow-sm flex items-center justify-center border border-purple-50">
+        <div className="w-full bg-white rounded-[1rem] p-10 shadow-sm flex h-[200px] items-center justify-center border border-purple-50">
           <span className="text-[#5F6D7E] text-lg font-medium text-center italic">
             {mood}
           </span>
@@ -100,7 +100,7 @@ export default function Chat1({ onStartChat, onStartBreathing }) {
         </div>
 
         {/* Footer Disclaimer */}
-        <footer className="text-center pt-10 pb-6">
+        <footer className="text-center pt-10">
           <p className="text-[#5F6D7E] text-xs font-medium">
             AI support only — not medical advice.<br />
             Please consult a professional if needed.

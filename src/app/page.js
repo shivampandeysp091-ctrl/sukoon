@@ -42,24 +42,24 @@ export default function Home() {
         />
       </div>
 
-      <div className="z-10 text-center max-w-2xl mb-20"> 
-        <h1 className="text-4xl md:text-6xl font-bold text-[#332258] leading-tight mb-4 tracking-tight">
+      <div className="z-10 text-center max-w-3xl mt-15"> 
+        <h1 className="text-3xl md:text-6xl font-bold text-[#332258] leading-tight mb-2 tracking-tight">
           You’re not alone.{" "}
           {/* Updated with your specific hex gradation */}
           <span className="inline-block bg-gradient-to-r from-[#8D63C6] via-[#6731AD] to-[#400095] bg-clip-text text-transparent">
             Sukoon
           </span>{" "}
-          is <br />
+          is 
           your space to breathe.
         </h1>
 
-        <p className="text-[#5F6D7E] text-base md:text-xl mb-10 font-medium max-w-md mx-auto">
+        <p className="text-[#5F6D7E] text-base md:text-xl mb-8 font-medium max-w-md mx-auto">
           Quiet support, whenever you need it.
         </p>
 
         <button 
           onClick={() => setCurrentStep("disclaimer")}
-          className="bg-[#330086] text-white font-bold py-4 px-12 rounded-full shadow-xl hover:bg-[#2a006e] hover:scale-105 transition-all duration-300 w-full max-w-[280px] text-lg"
+          className="bg-[#330086] text-white font-bold py-2 px-12 -mt-5 rounded-full shadow-xl hover:bg-[#2a006e] hover:scale-105 transition-all duration-300 w-full max-w-[200px] text-lg"
         >
           Get Started
         </button>
